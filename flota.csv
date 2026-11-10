@@ -1,8 +1,8 @@
 ID,Categoria,Modelo,Bateria,Disponible
 SCO-001,Scout,FalconEye Mini,85,Si
 SCO-002,Scout,FalconEye Mini,15,Si
-CAR-001,Cargo,SkyHauler X2,98,Si
-CAR-002,Cargo,SkyHauler X2,42,Si
+CAR-001,Cargo,SkyHauler X2,98,No
+CAR-002,Cargo,SkyHauler X2,42,No
 CAR-003,Cargo,SkyHauler X1,8,Si
 CAR-004,Cargo,SkyHauler X2,76,No
 HEA-001,Heavy,TitanLift 20,60,Si
@@ -19,3 +19,5 @@ CAR-005,Cargo,SkyHauler X1,25,Si
 HEA-004,Heavy,TitanLift Pro,3,Si
 COO-004,Cooler,FreshWing R2,64,No
 RAC-004,Racer,BoltStrike V3,18,Si
+SCO-004,Scout,2,100,Si
+CAR-006,Cargo,Skywalker,100,Si

@@ -146,7 +146,45 @@ ingresar_dron() {
 
     echo "Dron ingresado: $nuevo_id - $categoria - $modelo - $bateria% - Disponible: $disponible"
 }
+asignar_dron() {
+    local id=""
+    local dron=""
+    local disponible=""
+    local bateria_actual=""
 
+    read -r -p "ID del dron a asignar: " id
+
+    if [[ ! "$id" =~ ^(SCO|CAR|HEA|COO|RAC)-[0-9]{3,}$ ]]; then
+        echo "Error: formato de ID inválido. Ejemplo: CAR-001."
+        return
+    fi
+
+    dron=$(grep "^$id," "$ARCHIVO_FLOTA")
+
+    if [[ -z "$dron" ]]; then
+        echo "Error: el dron $id no existe."
+        return
+    fi
+
+    disponible=$(echo "$dron" | cut -d',' -f5)
+
+    if [[ "$disponible" != "Si" ]]; then
+        echo "Error: el dron $id no está disponible."
+        return
+    fi
+
+    bateria_actual=$(echo "$dron" | cut -d',' -f4)
+
+    if [ "$bateria_actual" -gt 20 ]; then
+        if sed -i "s/^$id,\(.*\),Si$/$id,\1,No/" "$ARCHIVO_FLOTA"; then
+            echo "Dron $id asignado exitosamente."
+        else
+            echo "Error: no se pudo actualizar el archivo de flota."
+        fi
+    else
+        echo "Error: batería insuficiente ($bateria_actual%)."
+    fi
+}
 menu_principal() {
     local usuario_actual="$1"
     local opcion=""
@@ -166,10 +204,10 @@ menu_principal() {
 
         case "$opcion" in
             1)
-                echo "Acá vamos a ingresar un dron."
+                ingresar_dron
                 ;;
             2)
-                echo "Acá vamos a asignar un dron."
+                asignar_dron
                 ;;
             3)
                 echo "Acá vamos a actualizar un dron."
